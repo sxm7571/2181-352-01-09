@@ -266,13 +266,12 @@ public class RecipeTest extends TestCase {
 		assertEquals(0, recipe.getPrice());
 	}
 	
-	public void testHashCodeWithNameIsNull() {
-		recipe.setName(null);
+	public void testHashCodeWithNameIsEmptyString() {
 		int hashCode = recipe.hashCode();
 		assertEquals(31, hashCode);
 	}
 	
-	public void testHashCodeWithNameIsNotNull() {
+	public void testHashCodeWithNameIsNotEmptyString() {
 		String fakeName = "Link";
 		recipe.setName(fakeName);
 		int actualHashCode = recipe.hashCode();
