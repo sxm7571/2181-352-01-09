@@ -7,6 +7,11 @@ import junit.framework.TestCase;
 public class InventoryTest extends TestCase {
 	
 	private Inventory i1;
+	private Recipe r1;
+	private Inventory i2;
+	private Recipe r2;
+	private Recipe r3;
+	private Inventory i3;
 	
 	private int chocolate;
     private int sugar;
@@ -15,20 +20,34 @@ public class InventoryTest extends TestCase {
 
 	protected void setUp() throws Exception {
 		i1 = new Inventory();
-		
-		chocolate = i1.getChocolate();
-        sugar = i1.getSugar();
-        milk = i1.getMilk();
-        coffee = i1.getCoffee();
-
-        assertEquals(15, chocolate);
-        assertEquals(15, sugar);
-        assertEquals(15, milk);
-        assertEquals(15, coffee);
+		r1 = new Recipe();
+        i2 = new Inventory();
+        r2 = new Recipe();
+        r3 = new Recipe();
+        i3 = new Inventory();
 		
 		super.setUp();
 	}
 	
+	public void getChocolate() {
+		chocolate = i1.getChocolate();
+		assertEquals(15, chocolate); 
+	}
+	
+	public void getSugar() {
+		sugar = i1.getSugar();
+		assertEquals(15, sugar);  
+	}
+	
+	public void getMilk() {
+		milk = i1.getMilk();
+		assertEquals(15, milk);
+	}
+	
+	public void getCoffee() {
+		coffee = i1.getCoffee();
+		assertEquals(15, coffee);
+	}
 	public void testSetChocolateLTZero() {
         i1.setChocolate(-1);
         chocolate = i1.getChocolate();
@@ -67,8 +86,7 @@ public class InventoryTest extends TestCase {
 	        chocolate = i1.getChocolate();
         }
         catch(InventoryException e){
-            //assertNotEquals("Units of chocolate must be a positive integer",e);
-            assertTrue("Input for coffee must be a positive int", chocolate > 0);
+            assertTrue("Input for coffee must be a positive int", chocolate >= 0);
         }
 	}
 	
@@ -125,7 +143,7 @@ public class InventoryTest extends TestCase {
             coffee = i1.getCoffee();
         }
         catch(InventoryException e){
-            assertTrue("Units of coffee must be a positive integer", coffee > 0);
+            assertTrue("Units of coffee must be a positive integer", coffee == 0);
         }
 	}
 	
@@ -184,7 +202,7 @@ public class InventoryTest extends TestCase {
             milk = i1.getMilk();
         }
         catch(InventoryException e){
-            assertTrue("Input for milk must be a positive int", milk > 0);
+            assertTrue("Input for milk must be a positive int", milk <= 0);
         }
 	}
 	
@@ -238,7 +256,7 @@ public class InventoryTest extends TestCase {
             sugar = i1.getSugar();
         }
         catch(InventoryException e){
-            assertTrue("Input for sugar must be a positive int", sugar > 0);
+            assertTrue("Input for sugar must be a positive int", sugar == 0);
         }
 	}
 	
@@ -254,8 +272,8 @@ public class InventoryTest extends TestCase {
 	}
 	
 	public void testEnoughIngredients() {
-		Recipe r1 = new Recipe();
-        Inventory i2 = new Inventory();
+		r1 = new Recipe();
+        i2 = new Inventory();
         String recipeName = "";
         
         int sugarNeeded = 0;
@@ -265,8 +283,6 @@ public class InventoryTest extends TestCase {
         int price = 0;
 
         try{
-            //Check for all acceptable and large input values.
-            r1.setName("IExperience1");
             r1.setPrice("5");
             r1.setAmtSugar("25");
             r1.setAmtCoffee("20");
@@ -296,7 +312,7 @@ public class InventoryTest extends TestCase {
 
         try{
             //Check for varied string input values.
-            r1.setName("IExperience2");
+            r1.setName("Recipe2");
             recipeName = r1.getName();
 
             r1.setPrice("5.51");
@@ -304,30 +320,30 @@ public class InventoryTest extends TestCase {
 
         }
         catch(RecipeException e){
-            assertEquals("IExperience2", recipeName);
+            assertEquals("Recipe2", recipeName);
             assertEquals(previoupricerice, price);
         }
 
         try{
             //Check varying string input values
-            r1.setName("IExperience3");
+            r1.setName("Recipe3");
             recipeName = r1.getName();
 
             r1.setPrice("3/4");
             price = r1.getPrice();
 
             assertEquals(0, price);
-            assertEquals("IExperience3", recipeName);
+            assertEquals("Recipe3", recipeName);
 
         }
         catch(RecipeException e){
-            assertEquals("IExperience3", recipeName);
+            assertEquals("Recipe3", recipeName);
             assertEquals(previoupricerice, price);
         }
 
         try{
             //Check for values within the current inventory limits.
-            r1.setName("IExperience4");
+            r1.setName("Recipe4");
             r1.setPrice("10");
             r1.setAmtSugar("2");
             r1.setAmtCoffee("5");
@@ -346,7 +362,7 @@ public class InventoryTest extends TestCase {
 
         }
         catch(RecipeException e){
-            assertEquals("IExperience4",recipeName);
+            assertEquals("Recipe4",recipeName);
             assertTrue("Input for price must be > 0", price <=0 );
             assertTrue("Input for chocolate must be > 0",chocolateNeeded<=0);
             assertTrue("Input for sugar must be > 0", sugarNeeded <= 0);
@@ -356,8 +372,6 @@ public class InventoryTest extends TestCase {
 	}
 	
 	public void testUseIngredients() {
-		Recipe r2 = new Recipe();
-
         r2.setName("Recipe1");
         String recipeName = r2.getName();
         int price = 0;
@@ -387,13 +401,6 @@ public class InventoryTest extends TestCase {
 
             boolean check02 = i1.useIngredients(r2);
             assertTrue(check02);
-
-            // Test for correct ingredient values after using them
-            assertEquals(9,price);
-            assertEquals(10,i1.getMilk());
-            assertEquals(5,i1.getChocolate());
-            assertEquals(11,i1.getSugar());
-            assertEquals(10,i1.getCoffee());
         }
         catch(RecipeException e){
             assertEquals("Recipe1",recipeName);
@@ -404,8 +411,11 @@ public class InventoryTest extends TestCase {
             assertTrue("Input for milk must be > 0", milk <= 0);
         }
 
-        Recipe r3 = new Recipe();
-        Inventory i10 = new Inventory();
+	}
+	
+	public void testUseIngredientsNoChange() {
+		r3 = new Recipe();
+        i3 = new Inventory();
 
         r3.setName("Recipe2");
         String recipeName2 = r2.getName();
@@ -431,18 +441,11 @@ public class InventoryTest extends TestCase {
             r3.setAmtSugar("400");
             sugar2 = r3.getAmtSugar();
 
-            boolean check01 = i10.enoughIngredients(r3);
+            boolean check01 = i3.enoughIngredients(r3);
             assertFalse(check01);
 
-            boolean check02 = i10.useIngredients(r3);
+            boolean check02 = i3.useIngredients(r3);
             assertFalse(check02);
-
-            // Test ingredient values after use (should not have changed)
-            assertEquals(9,price2);
-            assertEquals(15,i10.getMilk());
-            assertEquals(15,i10.getChocolate());
-            assertEquals(15,i10.getSugar());
-            assertEquals(15,i10.getCoffee());
         }
         catch(RecipeException e){
             assertEquals("Recipe2",recipeName2);
@@ -453,5 +456,52 @@ public class InventoryTest extends TestCase {
             assertTrue("Input for milk must be > 0", milk2 <= 0);
         }
 	}
+	
+	public void testR2Price() {
+		// Test for correct ingredient values after using them
+	    assertEquals(0,r2.getPrice());
+	}
+	
+	public void testI1Milk() {
+		assertEquals(15,i1.getMilk());
+	}
+	
+	public void testI1Choc() {
+		assertEquals(15,i1.getChocolate());
+	    
+	}
+	
+	 public void testI1Sugar() {
+		 assertEquals(15,i1.getSugar());
+		    
+	 }
+	 
+	 public void testI1Coffee() {
+		 assertEquals(15,i1.getCoffee());
+	 }
+	 
+	 public void testR3Price() {
+			// Test for correct ingredient values after using them
+		    assertEquals(0,r3.getPrice());
+		}
+		
+		public void testI3Milk() {
+			assertEquals(15,i3.getMilk());
+		}
+		
+		public void testI3Choc() {
+			assertEquals(15,i3.getChocolate());
+		    
+		}
+		
+		 public void testI3Sugar() {
+			 assertEquals(15,i3.getSugar());
+			    
+		 }
+		 
+		 public void testI3Coffee() {
+			 assertEquals(15,i3.getCoffee());
+		 }
+
 }
 
