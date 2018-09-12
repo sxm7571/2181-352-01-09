@@ -101,6 +101,16 @@ public class InventoryTest extends TestCase {
         chocolate = i1.getChocolate();
         assertEquals(17, chocolate);
 	}
+
+    public void testAddChocInvalidChar() {
+        String fakeChoc = "abc";
+        try {
+            i1.addSugar(fakeChoc);
+            fail("InventoryException should be thrown");
+        } catch (InventoryException e) {
+        }
+        assertEquals(15, i1.getChocolate());
+    }
 	
 	public void testSetCoffeeZero() {
 		// Test setting to 0
@@ -155,7 +165,17 @@ public class InventoryTest extends TestCase {
 			fail("InventoryException should not be thrown");
 		}
 	}
-	
+
+    public void testAddCoffeeInvalidChar() {
+        String fakeCoffee = "abc";
+        try {
+            i1.addSugar(fakeCoffee);
+            fail("InventoryException should be thrown");
+        } catch (InventoryException e) {
+        }
+        assertEquals(15, i1.getCoffee());
+    }
+
 	public void testGetCoffee() {
 		coffee = i1.getCoffee();
         assertEquals(15, coffee);
@@ -216,6 +236,16 @@ public class InventoryTest extends TestCase {
         milk = i1.getMilk();
         assertEquals(17,milk);
 	}
+
+    public void testAddMilkInvalidChar() {
+        String fakeMilk = "abc";
+        try {
+            i1.addSugar(fakeMilk);
+            fail("InventoryException should be thrown");
+        } catch (InventoryException e) {
+        }
+        assertEquals(15, i1.getMilk());
+    }
 	
 	public void testSetSugarZero() {
 		// Test input = 0
@@ -248,6 +278,16 @@ public class InventoryTest extends TestCase {
             assertNotSame("Input for sugar ", e);
         }
 	}
+
+    public void testAddSugarInvalidChar() {
+        String fakeSugar = "abc";
+        try {
+            i1.addSugar(fakeSugar);
+            fail("InventoryException should be thrown");
+        } catch (InventoryException e) {
+        }
+        assertEquals(15, i1.getSugar());
+    }
 	
 	public void testAddSugarLTZero() {
 		//Check for the equality operator for the lower boundary input value = -1. Expected to receive an exception message.
@@ -270,6 +310,16 @@ public class InventoryTest extends TestCase {
         sugar = i1.getSugar();
         assertEquals(17,sugar);
 	}
+
+	public void testToString() {
+	    Inventory invent = new Inventory();
+	    invent.setChocolate(4);
+	    invent.setMilk(2);
+	    invent.setSugar(3);
+	    invent.setCoffee(1);
+
+	    assertEquals("Coffee: 1\nMilk: 2\nSugar: 3\nChocolate: 4\n", invent.toString());
+    }
 	
 	public void testEnoughIngredients() {
 		r1 = new Recipe();
