@@ -252,6 +252,16 @@ public class InventoryTest extends TestCase {
         sugar = i1.getSugar();
         assertEquals(17,sugar);
 	}
+
+	public void testToStrong() {
+	    Inventory invent = new Inventory();
+	    invent.setChocolate(4);
+	    invent.setMilk(2);
+	    invent.setSugar(3);
+	    invent.setCoffee(1);
+
+	    assertEquals("Coffee: 1\nMilk: 2\nSugar: 3\nChocolate: 4\n", invent.toString());
+    }
 	
 	public void testEnoughIngredients() {
 		Recipe r1 = new Recipe();
