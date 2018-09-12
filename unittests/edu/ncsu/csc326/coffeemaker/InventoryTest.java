@@ -111,7 +111,16 @@ public class InventoryTest extends TestCase {
         }
         assertEquals(15, i1.getChocolate());
     }
-	
+
+    public void testAddChocNegative() {
+        String fakeChoc = "-8";
+        try {
+            i1.addChocolate(fakeChoc);
+        } catch (InventoryException e) {
+        }
+        assertEquals(15, i1.getChocolate());
+    }
+
 	public void testSetCoffeeZero() {
 		// Test setting to 0
         i1.setCoffee(0);
@@ -171,6 +180,15 @@ public class InventoryTest extends TestCase {
         try {
             i1.addSugar(fakeCoffee);
             fail("InventoryException should be thrown");
+        } catch (InventoryException e) {
+        }
+        assertEquals(15, i1.getCoffee());
+    }
+
+    public void testAddCoffeeNegative() {
+        String fakeCoffee = "-8";
+        try {
+            i1.addCoffee(fakeCoffee);
         } catch (InventoryException e) {
         }
         assertEquals(15, i1.getCoffee());
@@ -246,6 +264,15 @@ public class InventoryTest extends TestCase {
         }
         assertEquals(15, i1.getMilk());
     }
+
+    public void testAddMilkNegative() {
+        String fakeMilk = "-8";
+        try {
+            i1.addMilk(fakeMilk);
+        } catch (InventoryException e) {
+        }
+        assertEquals(15, i1.getMilk());
+    }
 	
 	public void testSetSugarZero() {
 		// Test input = 0
@@ -287,6 +314,15 @@ public class InventoryTest extends TestCase {
         } catch (InventoryException e) {
         }
         assertEquals(15, i1.getSugar());
+    }
+
+    public void testAddSugarNegative() {
+        String fakeSugar = "-8";
+        try {
+            i1.addSugar(fakeSugar);
+        } catch (InventoryException e) {
+        }
+        assertEquals(7, i1.getSugar());
     }
 	
 	public void testAddSugarLTZero() {
