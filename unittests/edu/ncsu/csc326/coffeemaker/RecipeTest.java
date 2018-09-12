@@ -4,6 +4,7 @@ import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 import junit.framework.TestCase;
 
 public class RecipeTest extends TestCase {
+
 	private Recipe recipe;
 	
 	protected void setUp() throws Exception {
@@ -48,6 +49,15 @@ public class RecipeTest extends TestCase {
 		recipe.setName(fakeName);
 		assertEquals("should set name when new name is not null", fakeName, recipe.getName());
 	}
+
+	public void testUpdateName() {
+		String fakeName1 = "Link";
+		recipe.setName(fakeName1);
+		String fakeName2 = "Bob";
+		recipe.setName(fakeName2);
+
+		assertEquals("should set name when new name is not null", fakeName2, recipe.getName());
+	}
 	
 	public void testSetNullName() {
 		String fakeName = "Link";
@@ -86,6 +96,16 @@ public class RecipeTest extends TestCase {
 		}
 		assertEquals(0, recipe.getAmtChocolate());
 	}
+
+	public void testSetAmtChocolateWithNullException() {
+		String fakeChocolate = null;
+		try {
+			recipe.setAmtChocolate(fakeChocolate);
+			fail("RecipeException should be thrown");
+		} catch (RecipeException e) {
+		}
+		assertEquals(0, recipe.getAmtChocolate());
+	}
 	
 	public void testSetAmtCoffeeWithPositiveNumber() {
 		String fakeAmtCoffee = "12";
@@ -109,6 +129,16 @@ public class RecipeTest extends TestCase {
 	
 	public void testSetAmtCoffeeWithNegativeNumberException() {
 		String fakeAmtCoffee = "-1";
+		try {
+			recipe.setAmtCoffee(fakeAmtCoffee);
+			fail("RecipeException should be thrown");
+		} catch (RecipeException e) {
+		}
+		assertEquals(0, recipe.getAmtCoffee());
+	}
+
+	public void testSetAmtCoffeeWithNullException() {
+		String fakeAmtCoffee = null;
 		try {
 			recipe.setAmtCoffee(fakeAmtCoffee);
 			fail("RecipeException should be thrown");
@@ -146,6 +176,16 @@ public class RecipeTest extends TestCase {
 		}
 		assertEquals(0, recipe.getAmtMilk());
 	}
+
+	public void testSetAmtMilkWithNullException() {
+		String fakeAmtMilk = null;
+		try {
+			recipe.setAmtMilk(fakeAmtMilk);
+			fail("RecipeException should be thrown");
+		} catch (RecipeException e) {
+		}
+		assertEquals(0, recipe.getAmtMilk());
+	}
 	
 	public void testSetAmtSugarWithPositiveNumber() {
 		String fakeAmtSugar = "12";
@@ -176,7 +216,17 @@ public class RecipeTest extends TestCase {
 		}
 		assertEquals(0, recipe.getAmtSugar());
 	}
-	
+
+	public void testSetAmtSugarWithNullException() {
+		String fakeAmtSugar = null;
+		try {
+			recipe.setAmtSugar(fakeAmtSugar);
+			fail("RecipeException should be thrown");
+		} catch (RecipeException e) {
+		}
+		assertEquals(0, recipe.getAmtSugar());
+	}
+
 	public void testSetPriceWithPositiveNumber() {
 		String fakePrice = "12";
 		try {
@@ -199,6 +249,16 @@ public class RecipeTest extends TestCase {
 	
 	public void testSetPriceWithNegativeNumberException() {
 		String fakePrice = "-1";
+		try {
+			recipe.setPrice(fakePrice);
+			fail("RecipeException should be thrown");
+		} catch (RecipeException e) {
+		}
+		assertEquals(0, recipe.getPrice());
+	}
+
+	public void testSetPriceWithNullException() {
+		String fakePrice = null;
 		try {
 			recipe.setPrice(fakePrice);
 			fail("RecipeException should be thrown");
@@ -236,10 +296,11 @@ public class RecipeTest extends TestCase {
 	}
 	
 	public void testNotEqualsNullNameWithNotNullNameObject() {
-		recipe.setName(null);
-		Recipe object = new Recipe();
-		object.setName("recipe");
-		assertFalse(recipe.equals(object));
+		Recipe object1 = new Recipe();
+		Recipe object2 = new Recipe();
+		object1.setName(null);
+		object2.setName("recipe");
+		assertFalse(object1.equals(object2));
 	}
 	
 	public void testNotEqualsNullNameObject() {
@@ -254,6 +315,14 @@ public class RecipeTest extends TestCase {
 		Recipe object = new Recipe();
 		object.setName("recipe 2");
 		assertFalse(recipe.equals(object));
+	}
+
+	public void testNullEquals() {
+		Recipe object1 = new Recipe();
+		Recipe object2 = new Recipe();
+		object1.setName(null);
+		object2.setName(null);
+		assertTrue(object1.equals(object2));
 	}
 	
 	public void testEquals() {
