@@ -60,11 +60,10 @@ public class RecipeTest extends TestCase {
 	}
 	
 	public void testSetNullName() {
-		String fakeName = "Link";
-		recipe.setName(fakeName);
-		assertEquals("should set name when new name is not null", fakeName, recipe.getName());
-		recipe.setName(null);
-		assertEquals("should not set name when new name is null", fakeName, recipe.getName());
+		String fakeName = null;
+		Recipe recipe1 = new Recipe();
+		recipe1.setName(fakeName);
+		assertEquals("should not set name when new name is null", "", recipe.getName());
 	}
 	
 	public void testSetAmtChocolateWithPositiveNumber() {
